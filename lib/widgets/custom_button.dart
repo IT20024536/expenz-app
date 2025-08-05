@@ -1,3 +1,4 @@
+import 'package:expenz/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
@@ -14,6 +15,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: MediaQuery.of(context).size.height*0.06,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
         color: buttonColor,
@@ -22,7 +24,8 @@ class CustomButton extends StatelessWidget {
         child: Text(
           buttonName,
           style: TextStyle(
-            fontSize: 10,
+            color: kWhite,
+            fontSize: 15,
             fontWeight: FontWeight.w500,
           ),
         ),
