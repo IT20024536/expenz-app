@@ -1,3 +1,4 @@
+import 'package:expenz/services/user_services.dart';
 import 'package:expenz/utils/colors.dart';
 import 'package:expenz/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -143,14 +144,19 @@ class _UserDataScreenState extends State<UserDataScreen> {
                         ),
                         SizedBox(height: 30,),
                         GestureDetector(
-                          onTap: (){
+                          onTap: () async {
                             if(formKey.currentState!.validate()){
                               String userName = userNameController.text;
                               String email = emailController.text;
                               String password = passwordController.text;
                               String conformPassword = conformPasswordController.text;
 
-                              //print("$userName $email $password $conformPassword");
+                              await UserService.storeUserDetails(
+                                  userName: userName,
+                                  email: email,
+                                  password: password,
+                                  conformPassword: conformPassword,
+                                  context: context);
                             }
                           },
                           child: CustomButton(
