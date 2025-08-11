@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserService{
 
+  ///Store the userName and password using shared preferences
   static Future<void> storeUserDetails(
   {
     required String userName,
@@ -13,6 +14,7 @@ class UserService{
 
     try{
 
+      ///check if the password and confirm password are the same
       if(password != conformPassword){
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -21,6 +23,7 @@ class UserService{
         );
       }
 
+      ///Store the username and email in shared preferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString("username", userName);
       await prefs.setString("email", email);
@@ -36,10 +39,19 @@ class UserService{
     }
   }
 
+  ///Check if the username is stored in shared preferences
   static Future<bool> checkUserName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userName = prefs.getString('username');
     return userName != null;
+  }
+
+  ///get the username and email
+  static Future<Map<String, String>> getUserData() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userName = pref.getString("username");
+    String? email = pref.getString("email");
+    return {"username": userName!, "email": email!};
   }
 
 }
