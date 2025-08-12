@@ -21,9 +21,10 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
 
     final List<Widget> pages = [
+      AddNewScreen(),
       HomeScreen(),
       TransactionScreen(),
-      AddNewScreen(),
+      //AddNewScreen(),
       BudgetScreen(),
       ProfileScreen(),
     ];
