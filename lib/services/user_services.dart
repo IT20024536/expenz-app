@@ -39,7 +39,7 @@ class UserService{
     }
   }
 
-  ///Check if the username is stored in shared preferences
+  ///check if the username is stored in shared preferences
   static Future<bool> checkUserName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userName = prefs.getString('username');
