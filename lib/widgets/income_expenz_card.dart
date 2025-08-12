@@ -26,6 +26,7 @@ class _IncomeExpenzCardState extends State<IncomeExpenzCard> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width*0.45,
+      height: MediaQuery.of(context).size.height*0.1,
       decoration: BoxDecoration(
         color: widget.bgColor,
         borderRadius: BorderRadius.circular(20),
@@ -59,9 +60,8 @@ class _IncomeExpenzCardState extends State<IncomeExpenzCard> {
                     color: kWhite
                   ),
                 ),
-                SizedBox(height: 5,),
                 Text(
-                  widget.amount.toString(),
+                  "\$${widget.amount.toStringAsFixed(0)}",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,

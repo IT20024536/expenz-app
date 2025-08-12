@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height*0.4,
+                  height: MediaQuery.of(context).size.height*0.3,
                   decoration: BoxDecoration(
                     color: kMainColor.withOpacity(0.50),
                     borderRadius: BorderRadius.only(
