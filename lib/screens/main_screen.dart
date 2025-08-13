@@ -70,7 +70,7 @@ class _MainScreenState extends State<MainScreen> {
               label: ""
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.rocket),
+              icon: Icon(Icons.pie_chart),
               label: "Budget",
             ),
             BottomNavigationBarItem(
