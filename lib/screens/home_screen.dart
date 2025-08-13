@@ -110,7 +110,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                )
+                ),
+                SizedBox(height: 10,),
+                Padding(
+                  padding: const EdgeInsets.all(kDefalutPadding),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "Spend Frequency",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        color: kBlack,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           )

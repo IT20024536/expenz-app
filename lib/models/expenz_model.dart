@@ -45,4 +45,31 @@ class Expenz {
     required this.time,
     required this.description,
   });
+
+  ///convert the expenz object to a JSON object
+  Map<String , dynamic> toJSON(){
+    return {
+      'id': id,
+      'title': title,
+      'amount': amount,
+      'category': category.index,
+      'date': date.toIso8601String(),
+      'time': time.toIso8601String(),
+      'description': description,
+    };
+  }
+
+  ///create the expenz object from a JSON object
+  factory Expenz.fromJSON(Map<String, dynamic> json){
+    return Expenz(
+        id: json['id'],
+        title: json['title'],
+        amount: json['amount'],
+        category: ExpenzCategory.values[json['category']],
+        date: DateTime.parse(json['date']),
+        time: DateTime.parse(json['time']),
+        description: json['description'],
+    );
+  }
+
 }
