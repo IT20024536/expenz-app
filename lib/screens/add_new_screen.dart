@@ -3,6 +3,7 @@ import 'package:expenz/models/income_model.dart';
 import 'package:expenz/utils/colors.dart';
 import 'package:expenz/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AddNewScreen extends StatefulWidget {
   const AddNewScreen({super.key});
@@ -20,6 +21,8 @@ class _AddNewScreenState extends State<AddNewScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
+  DateTime _selectedDate = DateTime.now();
+  DateTime _selectedTime = DateTime.now();
 
   @override
   void dispose() {
@@ -250,7 +253,136 @@ class _AddNewScreenState extends State<AddNewScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 15,),
+
+                            SizedBox(height: 20,),
+
+                            ///date picker
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  onTap: (){
+                                    showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(2020),
+                                        lastDate: DateTime(2030),
+                                    ).then((value){
+                                      if(value != null) {
+                                        setState(() {
+                                          _selectedDate = value;
+                                        });
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(100),
+                                      color: kMainColor,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 30,
+                                        vertical: 10,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                              Icons.calendar_month_outlined,
+                                            color: kWhite,
+                                          ),
+                                          SizedBox(width: 10,),
+                                          Text(
+                                              "Select Date",
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500,
+                                              color: kWhite
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                    DateFormat.yMMMd().format(_selectedDate),
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: kGrey,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            SizedBox(height: 10,),
+
+                            ///time picker
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  onTap: (){
+                                    showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay.now(),
+                                    ).then((value){
+                                      if(value != null) {
+                                        setState(() {
+                                          _selectedTime = DateTime(
+                                            _selectedDate.year,
+                                            _selectedDate.month,
+                                            _selectedDate.day,
+                                            value.hour,
+                                            value.minute,
+                                          );
+                                        });
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(100),
+                                      color: kYellow,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 30,
+                                        vertical: 10,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.watch_later_outlined,
+                                            color: kWhite,
+                                          ),
+                                          SizedBox(width: 10,),
+                                          Text(
+                                            "Select Time",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w500,
+                                                color: kWhite
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  DateFormat.jm().format(_selectedTime),
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: kGrey,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            Divider(height: 50,),
 
                           ],
                         ),
