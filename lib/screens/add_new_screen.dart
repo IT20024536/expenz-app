@@ -403,11 +403,10 @@ class _AddNewScreenState extends State<AddNewScreen> {
                           GestureDetector(
                             onTap: () async {
 
-                              ///save the expenz or income data to shared pref
-                              List<Expenz> loadedExpenzes = await ExpenzServices().loadExpenzes();
-                              List<Income> loadedIncomes = await IncomeServices().loadIncomes();
-
                               if (selectedMethod == 0){
+
+                                ///save the expenz data to shared pref
+                                List<Expenz> loadedExpenzes = await ExpenzServices().loadExpenzes();
 
                               ///create the expenz to store
                               Expenz expenz = Expenz(
@@ -423,7 +422,15 @@ class _AddNewScreenState extends State<AddNewScreen> {
                               ///add expenz
                               widget.addExpenz(expenz);
 
+                              ///clear the fields
+                              _titleController.clear();
+                              _amountController.clear();
+                              _descriptionController.clear();
+
                              } else {
+
+                                ///save the income data to shared pref
+                                List<Income> loadedIncomes = await IncomeServices().loadIncomes();
 
                                 ///create the income to store
                                 Income income = Income(
@@ -439,6 +446,10 @@ class _AddNewScreenState extends State<AddNewScreen> {
                                 ///add income
                                 widget.addIncome(income);
 
+                                ///clear the fields
+                                _titleController.clear();
+                                _amountController.clear();
+                                _descriptionController.clear();
                              }
 
 
