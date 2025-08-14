@@ -1,6 +1,7 @@
 import 'package:expenz/models/expenz_model.dart';
 import 'package:expenz/models/income_model.dart';
 import 'package:expenz/services/expenz_services.dart';
+import 'package:expenz/services/income_services.dart';
 import 'package:expenz/utils/colors.dart';
 import 'package:expenz/utils/constants.dart';
 import 'package:expenz/widgets/custom_button.dart';
@@ -10,10 +11,12 @@ import 'package:intl/intl.dart';
 class AddNewScreen extends StatefulWidget {
   
   final Function(Expenz) addExpenz;
+  final Function(Income) addIncome;
 
   const AddNewScreen({
     super.key,
-    required this.addExpenz
+    required this.addExpenz,
+    required this.addIncome,
   });
 
   @override
@@ -402,6 +405,9 @@ class _AddNewScreenState extends State<AddNewScreen> {
 
                               ///save the expenz or income data to shared pref
                               List<Expenz> loadedExpenzes = await ExpenzServices().loadExpenzes();
+                              List<Income> loadedIncomes = await IncomeServices().loadIncomes();
+
+                              if (selectedMethod == 0){
 
                               ///create the expenz to store
                               Expenz expenz = Expenz(
@@ -413,10 +419,29 @@ class _AddNewScreenState extends State<AddNewScreen> {
                                   date: _selectedDate,
                                   time: _selectedTime,
                                   description: _descriptionController.text,
-                              );
-
+                                );
                               ///add expenz
                               widget.addExpenz(expenz);
+
+                             } else {
+
+                                ///create the income to store
+                                Income income = Income(
+                                    id: loadedIncomes.length + 1,
+                                    title: _titleController.text,
+                                    amount: _amountController.text.isEmpty
+                                            ? 0 : double.parse(_amountController.text),
+                                    category: incomeCategory,
+                                    date: _selectedDate,
+                                    time: _selectedTime,
+                                    description: _descriptionController.text,
+                                );
+                                ///add income
+                                widget.addIncome(income);
+
+                             }
+
+
                             },
                             child: CustomButton(
                                 buttonName: "Add",
