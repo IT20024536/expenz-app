@@ -88,18 +88,13 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
 
     final List<Widget> pages = [
-      // AddNewScreen(
-      //   addExpenz: addNewExpenz,
-      //   addIncome: addNewIncome,
-      // ),
+      HomeScreen(),
       TransactionScreen(
         expenzesList: expenzList,
         incomesList: incomeList,
         onDismissedExpenz: removeExpenz,
         onDismissedIncome: removeIncome,
       ),
-      HomeScreen(),
-      //TransactionScreen(),
       AddNewScreen(
         addExpenz: addNewExpenz,
         addIncome: addNewIncome,
