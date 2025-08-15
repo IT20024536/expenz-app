@@ -28,7 +28,7 @@ class IncomeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 20),
-      padding: EdgeInsets.all(kDefalutPadding),
+      padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
           color: kWhite,
           borderRadius: BorderRadius.circular(10),
@@ -56,7 +56,7 @@ class IncomeCard extends StatelessWidget {
               height: 20,
             ),
           ),
-          SizedBox(width: 10,),
+          SizedBox(width: 20,),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -76,6 +76,7 @@ class IncomeCard extends StatelessWidget {
                   fontWeight: FontWeight.w300,
                   color: kGrey,
                 ),
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),

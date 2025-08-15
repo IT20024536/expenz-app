@@ -27,7 +27,7 @@ class ExpenzCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 20),
-      padding: EdgeInsets.all(kDefalutPadding),
+      padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: kWhite,
         borderRadius: BorderRadius.circular(10),
@@ -55,7 +55,7 @@ class ExpenzCard extends StatelessWidget {
               height: 20,
             ),
           ),
-          SizedBox(width: 10,),
+          SizedBox(width: 20,),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -75,6 +75,7 @@ class ExpenzCard extends StatelessWidget {
                   fontWeight: FontWeight.w300,
                   color: kGrey,
                 ),
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
@@ -92,7 +93,7 @@ class ExpenzCard extends StatelessWidget {
               ),
               SizedBox(height: 10,),
               Text(
-                DateFormat.jm().format(date),
+                DateFormat.jm().format(time),
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w300,

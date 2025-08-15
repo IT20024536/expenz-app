@@ -70,4 +70,49 @@ class ExpenzServices{
     return loadedExpenzes;
   }
 
+  ///delete the expenz from shared preferences from the id
+  Future<void> deleteExpenzes (int id, BuildContext context) async {
+    try{
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      List<String>? existingExpenzes = pref.getStringList(_expenzKey);
+
+      ///convert the existing expenzes to a list of expenz objects
+      List<Expenz> existingExpenzObjects = [];
+      if(existingExpenzes != null){
+        existingExpenzObjects = existingExpenzes.map((e) => Expenz.fromJSON(json.decode(e))).toList();
+      }
+
+      ///removes the expenz with the specified id from the list
+      existingExpenzObjects.removeWhere((expenz) => expenz.id == id);
+
+      ///convert the list of expenz objects back to a list of strings
+      List<String> updatedExpenzes = existingExpenzObjects.map((e) => json.encode(e.toJSON())).toList();
+
+      ///save the updated list of expenzes to the shared preferences
+      await pref.setStringList(_expenzKey, updatedExpenzes);
+
+      ///show snack bar success
+      if(context.mounted){
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Expenzes deleted successfully"),
+            duration: Duration(seconds: 2),
+          )
+        );
+      }
+    } catch(error){
+      print(error.toString());
+
+      ///show snack bar
+      if(context.mounted){
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Error Expenzes deleted"),
+              duration: Duration(seconds: 2),
+            )
+        );
+      }
+    }
+  }
+
 }

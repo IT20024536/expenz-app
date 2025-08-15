@@ -59,6 +59,22 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  ///function to remove expenz from the list
+  void removeExpenz(Expenz expenz){
+    ExpenzServices().deleteExpenzes(expenz.id, context);
+    setState(() {
+      expenzList.remove(expenz);
+    });
+  }
+
+  ///function to remove income from the list
+  void removeIncome(Income income){
+    IncomeServices().deleteIncomes(income.id, context);
+    setState(() {
+      incomeList.remove(income);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -76,7 +92,12 @@ class _MainScreenState extends State<MainScreen> {
       //   addExpenz: addNewExpenz,
       //   addIncome: addNewIncome,
       // ),
-      TransactionScreen(),
+      TransactionScreen(
+        expenzesList: expenzList,
+        incomesList: incomeList,
+        onDismissedExpenz: removeExpenz,
+        onDismissedIncome: removeIncome,
+      ),
       HomeScreen(),
       //TransactionScreen(),
       AddNewScreen(
