@@ -60,7 +60,15 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          ListView.builder(
+                          widget.expenzesList.isEmpty
+                          ? const Text(
+                              "No Expenzes Added Yet, Add Some Expenz To Here!",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: kMainColor,
+                            ),
+                          ) : ListView.builder(
                             shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               physics: NeverScrollableScrollPhysics(),
@@ -105,7 +113,15 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          ListView.builder(
+                          widget.incomesList.isEmpty
+                          ? const Text(
+                            "No Incomes Added Yet, Add Some Income To See Here!",
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: kMainColor,
+                            ),
+                          ) : ListView.builder(
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               physics: NeverScrollableScrollPhysics(),
