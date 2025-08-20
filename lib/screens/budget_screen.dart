@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../utils/constants.dart';
 import '../widgets/budget_pie_chart.dart';
+import '../widgets/category_card.dart';
 
 class BudgetScreen extends StatefulWidget {
 
@@ -25,8 +26,20 @@ class _BudgetScreenState extends State<BudgetScreen> {
 
   int selectedMethod = 0;
 
+  ///method to find the category color from the category
+  Color getCategoryColor(dynamic category){
+    if(category is ExpenzCategory){
+      return expenzCategoriesColors[category]!;
+    } else {
+      return incomeCategoryColor[category]!;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    final data = selectedMethod == 0 ? widget.expenzeCategoryTotals : widget.incomeCategoryTotals;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -122,7 +135,30 @@ class _BudgetScreenState extends State<BudgetScreen> {
                   expenzeCategoryTotals: widget.expenzeCategoryTotals,
                   incomeCategoryTotals: widget.incomeCategoryTotals,
                   isExpenz: selectedMethod == 0,
+                ),
+                SizedBox(height: 20,),
 
+                ///list of categories
+                SizedBox(
+                  height: MediaQuery.of(context).size.height*0.3,
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: data.length,
+                      itemBuilder: (context,index){
+
+                        final category = data.keys.toList()[index];
+                        final total = data.values.toList()[index];
+
+                        return CategoryCard(
+                          title: category.name,
+                          amount: total,
+                          total: data.values.reduce((value,element) => value + element),
+                          progressColor: getCategoryColor(category),
+                          isExpenz: selectedMethod == 0 ,
+                        );
+                      }
+                  ),
                 ),
 
               ],
