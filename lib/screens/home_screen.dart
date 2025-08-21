@@ -30,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   ///for store the username
   String username = "";
+
   double expenzTotal = 0;
   double incomeTotal = 0;
 
