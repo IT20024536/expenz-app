@@ -27,6 +27,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
 
   ///state to track the expenz or income
   int selectedMethod = 0;
+
   ExpenzCategory expenzCategory = ExpenzCategory.health;
   IncomeCategory incomeCategory = IncomeCategory.salary;
   final TextEditingController _titleController = TextEditingController();
@@ -34,6 +35,8 @@ class _AddNewScreenState extends State<AddNewScreen> {
   final TextEditingController _amountController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
   DateTime _selectedTime = DateTime.now();
+
+  final _formkey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -182,6 +185,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(kDefalutPadding),
                   child: Form(
+                    key: _formkey,
                       child: Column(
                         children: [
                           ///category selector drop down
@@ -222,6 +226,11 @@ class _AddNewScreenState extends State<AddNewScreen> {
 
                           ///text fields
                           TextFormField(
+                            validator: (value){
+                              if(value!.isEmpty){
+                                return "Please Enter a Title!";
+                              }
+                            },
                             controller: _titleController,
                             decoration: InputDecoration(
                               hintText: "Title",
@@ -236,6 +245,11 @@ class _AddNewScreenState extends State<AddNewScreen> {
                           ),
                           SizedBox(height: 15,),
                           TextFormField(
+                            validator: (value){
+                              if(value!.isEmpty){
+                                return "Please Enter a Description!";
+                              }
+                            },
                             controller: _descriptionController,
                             decoration: InputDecoration(
                               hintText: "Description",
@@ -250,6 +264,16 @@ class _AddNewScreenState extends State<AddNewScreen> {
                           ),
                           SizedBox(height: 15,),
                           TextFormField(
+                            validator: (value){
+                              if(value!.isEmpty){
+                                return "Please Enter a Amount!";
+                              }
+                              double ? amount = double.tryParse(value);
+                              if(amount == null || amount <= 0){
+                                return "Please Enter a Valid Amount!";
+                              }
+                              return null;
+                            },
                             controller: _amountController,
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
@@ -403,55 +427,56 @@ class _AddNewScreenState extends State<AddNewScreen> {
                           GestureDetector(
                             onTap: () async {
 
-                              if (selectedMethod == 0){
+                              if(_formkey.currentState!.validate()){
 
-                                ///save the expenz data to shared pref
-                                List<Expenz> loadedExpenzes = await ExpenzServices().loadExpenzes();
+                                if (selectedMethod == 0){
+                                  ///save the expenz data to shared pref
+                                  List<Expenz> loadedExpenzes = await ExpenzServices().loadExpenzes();
 
-                              ///create the expenz to store
-                              Expenz expenz = Expenz(
-                                  id: loadedExpenzes.length + 1,
-                                  title: _titleController.text,
-                                  amount: _amountController.text.isEmpty
-                                          ? 0 : double.parse(_amountController.text),
-                                  category: expenzCategory,
-                                  date: _selectedDate,
-                                  time: _selectedTime,
-                                  description: _descriptionController.text,
-                                );
-                              ///add expenz
-                              widget.addExpenz(expenz);
+                                  ///create the expenz to store
+                                  Expenz expenz = Expenz(
+                                    id: loadedExpenzes.length + 1,
+                                    title: _titleController.text,
+                                    amount: _amountController.text.isEmpty
+                                        ? 0 : double.parse(_amountController.text),
+                                    category: expenzCategory,
+                                    date: _selectedDate,
+                                    time: _selectedTime,
+                                    description: _descriptionController.text,
+                                  );
+                                  ///add expenz
+                                  widget.addExpenz(expenz);
 
-                              ///clear the fields
-                              _titleController.clear();
-                              _amountController.clear();
-                              _descriptionController.clear();
+                                  ///clear the fields
+                                  _titleController.clear();
+                                  _amountController.clear();
+                                  _descriptionController.clear();
 
-                             } else {
+                                } else {
 
-                                ///save the income data to shared pref
-                                List<Income> loadedIncomes = await IncomeServices().loadIncomes();
+                                  ///save the income data to shared pref
+                                  List<Income> loadedIncomes = await IncomeServices().loadIncomes();
 
-                                ///create the income to store
-                                Income income = Income(
+                                  ///create the income to store
+                                  Income income = Income(
                                     id: loadedIncomes.length + 1,
                                     title: _titleController.text,
                                     amount: _amountController.text.isEmpty
-                                            ? 0 : double.parse(_amountController.text),
+                                        ? 0 : double.parse(_amountController.text),
                                     category: incomeCategory,
                                     date: _selectedDate,
                                     time: _selectedTime,
                                     description: _descriptionController.text,
-                                );
-                                ///add income
-                                widget.addIncome(income);
+                                  );
+                                  ///add income
+                                  widget.addIncome(income);
 
-                                ///clear the fields
-                                _titleController.clear();
-                                _amountController.clear();
-                                _descriptionController.clear();
-                             }
-
+                                  ///clear the fields
+                                  _titleController.clear();
+                                  _amountController.clear();
+                                  _descriptionController.clear();
+                                }
+                              }
 
                             },
                             child: CustomButton(
